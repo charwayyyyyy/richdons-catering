@@ -99,7 +99,7 @@ const Hero = () => {
     if (menuSection) {
       gsap.to(window, {
         duration: 1.5,
-        scrollTo: { y: menuSection, offsetY: 80 },
+        scrollTo: { y: menuSection.offsetTop - 80 },
         ease: 'power3.inOut'
       });
     }

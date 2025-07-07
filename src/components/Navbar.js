@@ -26,7 +26,7 @@ const Navbar = () => {
     if (element) {
       gsap.to(window, {
         duration: 1.5,
-        scrollTo: { y: element, offsetY: 80 },
+        scrollTo: { y: element.offsetTop - 80 },
         ease: 'power3.inOut'
       });
     }
