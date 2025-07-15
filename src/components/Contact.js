@@ -155,11 +155,32 @@ const Contact = () => {
               ))}
             </div>
 
-            {/* Map Placeholder */}
-            <div className="bg-gradient-to-br from-ghana-gold/20 to-ghana-green/20 rounded-2xl p-8 text-center">
-              <img src="./assets/images/login-graphic.png" alt="Location" className="w-full h-48 object-cover rounded-xl mb-4" />
-              <h3 className="text-2xl font-bold text-earth-dark mb-2">Find Us in Accra</h3>
-              <p className="text-earth-medium">Located in the heart of Accra, easily accessible for tastings and consultations.</p>
+            {/* Map and Food Showcase */}
+            <div className="bg-gradient-to-br from-ghana-gold/20 to-ghana-green/20 rounded-2xl p-8 text-center relative overflow-hidden">
+              <div className="absolute inset-0 opacity-10">
+                <div className="absolute top-5 left-10 w-20 h-20 rounded-full overflow-hidden">
+                  <img src="./assets/images/jollof.jpeg" alt="" className="w-full h-full object-cover" />
+                </div>
+                <div className="absolute bottom-5 right-10 w-16 h-16 rounded-full overflow-hidden">
+                  <img src="./assets/images/kelewele.jpeg" alt="" className="w-full h-full object-cover" />
+                </div>
+              </div>
+              
+              <div className="relative z-10">
+                <img src="./assets/images/restaurant.jpg" alt="Our Restaurant" className="w-full h-48 object-cover rounded-xl mb-4 shadow-lg" />
+                <h3 className="text-2xl font-bold text-earth-dark mb-2">Visit Our Ghanaian Kitchen</h3>
+                <p className="text-earth-medium">Located in the heart of Accra, come experience our authentic Ghanaian cuisine and discuss your catering needs.</p>
+                <div className="mt-4 flex justify-center space-x-4">
+                  <div className="bg-white p-2 rounded-lg shadow-md inline-flex items-center">
+                    <img src="./assets/icons/location.png" alt="Location" className="w-5 h-5 mr-2" />
+                    <span className="text-ghana-red font-medium">Labone, Accra</span>
+                  </div>
+                  <div className="bg-white p-2 rounded-lg shadow-md inline-flex items-center">
+                    <img src="./assets/icons/clock.png" alt="Hours" className="w-5 h-5 mr-2" />
+                    <span className="text-ghana-green font-medium">Open Daily</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -215,11 +236,13 @@ const Contact = () => {
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-ghana-gold transition-all duration-300"
                   >
                     <option value="">Select event type</option>
-                    <option value="wedding">Wedding</option>
+                    <option value="wedding">Traditional Ghanaian Wedding</option>
                     <option value="corporate">Corporate Event</option>
-                    <option value="birthday">Birthday Party</option>
-                    <option value="cultural">Cultural Event</option>
-                    <option value="other">Other</option>
+                    <option value="birthday">Birthday Celebration</option>
+                    <option value="cultural">Cultural Festival</option>
+                    <option value="outdooring">Baby Outdooring Ceremony</option>
+                    <option value="funeral">Funeral Reception</option>
+                    <option value="other">Other Celebration</option>
                   </select>
                 </div>
               </div>
@@ -277,20 +300,35 @@ const Contact = () => {
         </div>
 
         {/* Call to Action */}
-        <div className="text-center bg-gradient-to-r from-ghana-red to-ghana-green rounded-3xl p-8 text-white">
-          <h3 className="text-3xl font-bold mb-4">Ready to Start Planning?</h3>
-          <p className="text-xl mb-6 opacity-90">
-            Call us now for immediate assistance and free consultation
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="btn-secondary text-lg px-8 py-3">
-              <img src="./assets/icons/phone.png" alt="Phone" className="inline-block w-5 h-5 mr-2" />
-              Call Now
-            </button>
-            <button className="bg-white/20 backdrop-blur-sm text-white font-semibold py-3 px-8 rounded-full transition-all duration-300 hover:bg-white/30 hover:scale-105">
-              <img src="./assets/icons/envelope.png" alt="Email" className="inline-block w-5 h-5 mr-2" />
-              Email Us
-            </button>
+        <div className="text-center bg-gradient-to-r from-ghana-red to-ghana-green rounded-3xl p-8 text-white relative overflow-hidden">
+          {/* Background Food Pattern */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute top-5 left-10 w-20 h-20 rounded-full overflow-hidden">
+              <img src="./assets/images/jollof.jpeg" alt="" className="w-full h-full object-cover" />
+            </div>
+            <div className="absolute bottom-5 right-10 w-16 h-16 rounded-full overflow-hidden">
+              <img src="./assets/images/kelewele.jpeg" alt="" className="w-full h-full object-cover" />
+            </div>
+            <div className="absolute top-1/2 right-1/4 w-12 h-12 rounded-full overflow-hidden">
+              <img src="./assets/images/banku.jpeg" alt="" className="w-full h-full object-cover" />
+            </div>
+          </div>
+          
+          <div className="relative z-10">
+            <h3 className="text-3xl font-bold mb-4">Ready to Taste Authentic Ghana?</h3>
+            <p className="text-xl mb-6 opacity-90">
+              Call us now for immediate assistance and a free tasting consultation
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button className="btn-secondary text-lg px-8 py-3 hover:scale-105 transition-transform duration-300 shadow-lg">
+                <img src="./assets/icons/phone.png" alt="Phone" className="inline-block w-5 h-5 mr-2" />
+                Call Now
+              </button>
+              <button className="bg-white/20 backdrop-blur-sm text-white font-semibold py-3 px-8 rounded-full transition-all duration-300 hover:bg-white/30 hover:scale-105 shadow-lg">
+                <img src="./assets/icons/envelope.png" alt="Email" className="inline-block w-5 h-5 mr-2" />
+                Email Us
+              </button>
+            </div>
           </div>
         </div>
       </div>

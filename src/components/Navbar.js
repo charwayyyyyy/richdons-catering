@@ -35,10 +35,10 @@ const Navbar = () => {
 
   const navItems = [
     { name: 'Home', id: 'hero' },
-    { name: 'About', id: 'about' },
-    { name: 'Menu', id: 'menu' },
-    { name: 'Services', id: 'services' },
-    { name: 'Gallery', id: 'gallery' },
+    { name: 'About Us', id: 'about' },
+    { name: 'Ghanaian Menu', id: 'menu' },
+    { name: 'Catering', id: 'services' },
+    { name: 'Food Gallery', id: 'gallery' },
     { name: 'Contact', id: 'contact' }
   ];
 
@@ -52,11 +52,16 @@ const Navbar = () => {
         <div className="flex items-center justify-between py-4">
           {/* Logo */}
           <div className="flex items-center space-x-3">
-            <img 
-              src="./assets/images/logo.png" 
-              alt="RichDons Logo" 
-              className="h-12 w-12 object-contain"
-            />
+            <div className="relative">
+              <img 
+                src="./assets/images/logo.jpg" 
+                alt="RichDons Logo" 
+                className="h-14 w-14 object-cover rounded-full border-2 border-ghana-gold shadow-md"
+              />
+              <div className="absolute -top-1 -right-1 w-5 h-5 bg-white rounded-full flex items-center justify-center shadow-sm">
+                <img src="./assets/images/kelewele.jpeg" alt="" className="w-4 h-4 rounded-full" />
+              </div>
+            </div>
             <div className="text-2xl font-bold">
               <span className={`transition-colors duration-300 ${
                 isScrolled ? 'text-ghana-red' : 'text-white'
@@ -68,6 +73,9 @@ const Navbar = () => {
               }`}>
                 Dons
               </span>
+              <div className="text-xs font-medium mt-0.5 ${isScrolled ? 'text-earth-medium' : 'text-white/80'}">
+                Authentic Ghanaian Cuisine
+              </div>
             </div>
           </div>
 
@@ -87,8 +95,13 @@ const Navbar = () => {
                 {item.name}
               </button>
             ))}
-            <button className="btn-primary ml-4">
-              Order Now
+            <button className="btn-primary ml-4 flex items-center space-x-2 group">
+              <span>Order Ghanaian</span>
+              <img 
+                src="./assets/icons/bag.png" 
+                alt="Order" 
+                className="w-4 h-4 group-hover:scale-110 transition-transform duration-300" 
+              />
             </button>
           </div>
 
@@ -126,8 +139,9 @@ const Navbar = () => {
               </button>
             ))}
             <div className="px-4">
-              <button className="btn-primary w-full">
-                Order Now
+              <button className="btn-primary w-full flex items-center justify-center space-x-2">
+                <span>Order Ghanaian</span>
+                <img src="./assets/icons/bag.png" alt="Order" className="w-4 h-4" />
               </button>
             </div>
           </div>

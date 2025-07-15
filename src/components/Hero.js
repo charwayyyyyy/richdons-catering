@@ -135,9 +135,9 @@ const Hero = () => {
       <div ref={heroRef} className="relative z-10 text-center px-4 max-w-6xl mx-auto">
         <div className="mb-8">
           <img 
-            src="./assets/images/logo.png" 
+            src="./assets/images/logo.jpg" 
             alt="RichDons Logo" 
-            className="h-24 w-24 mx-auto mb-6 animate-bounce-slow glow"
+            className="h-32 w-32 mx-auto mb-6 animate-bounce-slow glow rounded-full border-4 border-ghana-gold"
           />
         </div>
         
@@ -185,28 +185,36 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Floating Food Images */}
+      {/* Floating Ghanaian Food Images */}
       <div className="absolute top-20 left-10 animate-float animation-delay-200">
         <img 
-          src="./assets/images/burger-one.png" 
-          alt="Burger" 
-          className="w-16 h-16 opacity-20 hover:opacity-40 transition-opacity duration-300"
+          src="./assets/images/jollof.jpeg" 
+          alt="Jollof Rice" 
+          className="w-20 h-20 opacity-30 hover:opacity-60 transition-opacity duration-300 rounded-full"
         />
       </div>
       
       <div className="absolute top-40 right-20 animate-float animation-delay-400">
         <img 
-          src="./assets/images/pizza-one.png" 
-          alt="Pizza" 
-          className="w-20 h-20 opacity-20 hover:opacity-40 transition-opacity duration-300"
+          src="./assets/images/banku.jpeg" 
+          alt="Banku" 
+          className="w-24 h-24 opacity-30 hover:opacity-60 transition-opacity duration-300 rounded-full"
         />
       </div>
       
       <div className="absolute bottom-40 left-20 animate-float animation-delay-600">
         <img 
-          src="./assets/images/salad.png" 
-          alt="Salad" 
-          className="w-14 h-14 opacity-20 hover:opacity-40 transition-opacity duration-300"
+          src="./assets/images/kelewele.jpeg" 
+          alt="Kelewele" 
+          className="w-18 h-18 opacity-30 hover:opacity-60 transition-opacity duration-300 rounded-full"
+        />
+      </div>
+      
+      <div className="absolute bottom-60 right-40 animate-float animation-delay-300">
+        <img 
+          src="./assets/images/waitors.jpg" 
+          alt="Service" 
+          className="w-22 h-22 opacity-30 hover:opacity-60 transition-opacity duration-300 rounded-full"
         />
       </div>
     </section>

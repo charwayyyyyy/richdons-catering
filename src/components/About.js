@@ -74,31 +74,31 @@ const About = () => {
   const features = [
     {
       icon: './assets/icons/star.png',
-      title: 'Premium Quality',
-      description: 'Fresh ingredients sourced locally and internationally'
+      title: 'Premium Ingredients',
+      description: 'Authentic Ghanaian spices and fresh local produce'
     },
     {
       icon: './assets/icons/clock.png',
-      title: 'Timely Service',
-      description: 'Always on time, every time for your special events'
+      title: 'Cultural Experience',
+      description: 'Traditional serving styles and dining customs'
     },
     {
       icon: './assets/icons/person.png',
-      title: 'Expert Chefs',
-      description: 'Trained professionals with years of culinary experience'
+      title: 'Ghanaian Chefs',
+      description: 'Native chefs trained in authentic cooking techniques'
     },
     {
       icon: './assets/icons/check.png',
-      title: 'Authentic Taste',
-      description: 'Traditional recipes passed down through generations'
+      title: 'Family Recipes',
+      description: 'Secret recipes passed down through generations'
     }
   ];
 
   const stats = [
     { number: 500, label: 'Happy Clients', suffix: '+' },
     { number: 1000, label: 'Events Catered', suffix: '+' },
-    { number: 15, label: 'Years Experience', suffix: '' },
-    { number: 50, label: 'Menu Items', suffix: '+' }
+    { number: 20, label: 'Ghanaian Dishes', suffix: '+' },
+    { number: 10, label: 'Regional Cuisines', suffix: '' }
   ];
 
   return (
@@ -122,20 +122,24 @@ const About = () => {
           <div ref={imageRef} className="relative">
             <div className="relative overflow-hidden rounded-3xl shadow-2xl">
               <img 
-                src="./assets/images/login-graphic.png" 
-                alt="About RichDons" 
+                src="./assets/images/chef.jpg" 
+                alt="Ghanaian Chef" 
                 className="w-full h-96 object-cover transform hover:scale-110 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-ghana-green/30 to-transparent"></div>
             </div>
             
-            {/* Floating Elements */}
-            <div className="absolute -top-6 -right-6 w-24 h-24 bg-ghana-gold rounded-full flex items-center justify-center shadow-lg animate-bounce-slow">
-              <img src="./assets/icons/star.png" alt="Star" className="w-12 h-12" />
+            {/* Floating Food Elements */}
+            <div className="absolute -top-6 -right-6 w-24 h-24 bg-ghana-gold rounded-full flex items-center justify-center shadow-lg animate-bounce-slow overflow-hidden">
+              <img src="./assets/images/jollof.jpeg" alt="Jollof Rice" className="w-full h-full object-cover" />
             </div>
             
-            <div className="absolute -bottom-6 -left-6 w-20 h-20 bg-ghana-red rounded-full flex items-center justify-center shadow-lg animate-pulse-slow">
-              <img src="./assets/icons/check.png" alt="Check" className="w-10 h-10" />
+            <div className="absolute -bottom-6 -left-6 w-20 h-20 bg-ghana-red rounded-full flex items-center justify-center shadow-lg animate-pulse-slow overflow-hidden">
+              <img src="./assets/images/kelewele.jpeg" alt="Kelewele" className="w-full h-full object-cover" />
+            </div>
+            
+            <div className="absolute top-1/2 -left-10 w-16 h-16 bg-ghana-green rounded-full flex items-center justify-center shadow-lg animate-float overflow-hidden">
+              <img src="./assets/images/banku.jpeg" alt="Banku" className="w-full h-full object-cover" />
             </div>
           </div>
 
@@ -143,17 +147,20 @@ const About = () => {
           <div ref={contentRef} className="space-y-8">
             <div>
               <h3 className="text-3xl font-bold text-earth-dark mb-4">
-                Authentic Ghanaian Cuisine Since 2012
+                Authentic Ghanaian Cuisine Since 2019
               </h3>
               <p className="text-lg text-earth-medium leading-relaxed mb-6">
                 RichDons was born from a passion to share the rich culinary heritage of Ghana 
                 with the world. Our journey began in a small kitchen in Accra, where traditional 
-                recipes were perfected and modern techniques were embraced.
+                recipes like <span className="text-ghana-red font-semibold">Jollof Rice</span>, <span className="text-ghana-gold font-semibold">Kelewele</span>, and <span className="text-ghana-green font-semibold">Banku & Tilapia</span> were perfected using time-honored techniques and authentic spices.
+              </p>
+              <p className="text-lg text-earth-medium leading-relaxed mb-6">
+                Our chefs have mastered the art of balancing the complex flavors that make Ghanaian cuisine unique - from the spicy heat of scotch bonnet peppers to the rich creaminess of groundnut soup and the tangy notes of fermented corn dough.
               </p>
               <p className="text-lg text-earth-medium leading-relaxed">
                 Today, we're proud to be one of the leading catering services, bringing authentic 
                 Ghanaian flavors to weddings, corporate events, and special celebrations across 
-                the region.
+                the region while educating our clients about the cultural significance behind each dish.
               </p>
             </div>
 
@@ -192,14 +199,29 @@ const About = () => {
 
         {/* Call to Action */}
         <div className="text-center mt-16 animate-on-scroll">
-          <div className="bg-gradient-to-r from-ghana-green to-ghana-red p-8 rounded-3xl text-white">
-            <h3 className="text-3xl font-bold mb-4">Ready to Experience Authentic Ghana?</h3>
-            <p className="text-xl mb-6 opacity-90">
-              Let us cater your next event with the finest Ghanaian cuisine
-            </p>
-            <button className="btn-secondary text-lg px-8 py-3">
-              Get Quote Now
-            </button>
+          <div className="bg-gradient-to-r from-ghana-green to-ghana-red p-8 rounded-3xl text-white relative overflow-hidden">
+            {/* Background Food Pattern */}
+            <div className="absolute inset-0 opacity-10">
+              <div className="absolute top-5 left-10 w-20 h-20 rounded-full overflow-hidden">
+                <img src="./assets/images/jollof.jpeg" alt="" className="w-full h-full object-cover" />
+              </div>
+              <div className="absolute bottom-5 right-10 w-16 h-16 rounded-full overflow-hidden">
+                <img src="./assets/images/kelewele.jpeg" alt="" className="w-full h-full object-cover" />
+              </div>
+              <div className="absolute top-1/2 right-1/4 w-12 h-12 rounded-full overflow-hidden">
+                <img src="./assets/images/banku.jpeg" alt="" className="w-full h-full object-cover" />
+              </div>
+            </div>
+            
+            <div className="relative z-10">
+              <h3 className="text-3xl font-bold mb-4">Ready to Taste Authentic Ghana?</h3>
+              <p className="text-xl mb-6 opacity-90">
+                Let us bring the rich flavors and cultural experience of Ghanaian cuisine to your next event
+              </p>
+              <button className="btn-secondary text-lg px-8 py-3 hover:scale-105 transition-transform duration-300">
+                Get Your Ghanaian Feast
+              </button>
+            </div>
           </div>
         </div>
       </div>

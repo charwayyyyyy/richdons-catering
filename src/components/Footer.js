@@ -235,12 +235,15 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Floating Elements */}
+      {/* Floating Elements - Ghanaian Food */}
       <div className="absolute top-10 right-10 opacity-10 animate-float animation-delay-200">
-        <img src="./assets/images/burger-one.png" alt="Food" className="w-20 h-20" />
+        <img src="./assets/images/jollof.jpeg" alt="Jollof Rice" className="w-20 h-20 rounded-full" />
       </div>
       <div className="absolute bottom-20 left-10 opacity-10 animate-float animation-delay-600">
-        <img src="./assets/images/pizza-one.png" alt="Food" className="w-16 h-16" />
+        <img src="./assets/images/kelewele.jpeg" alt="Kelewele" className="w-16 h-16 rounded-full" />
+      </div>
+      <div className="absolute top-40 left-20 opacity-10 animate-float animation-delay-400">
+        <img src="./assets/images/banku.jpeg" alt="Banku" className="w-18 h-18 rounded-full" />
       </div>
     </footer>
   );
