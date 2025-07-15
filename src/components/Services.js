@@ -1,11 +1,15 @@
+// Import necessary libraries and components
 import React, { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+// Services component
 const Services = () => {
+  // Refs for DOM elements
   const sectionRef = useRef();
   const servicesGridRef = useRef();
 
+  // Data for services
   const services = [
     {
       id: 1,
@@ -96,6 +100,7 @@ const Services = () => {
     }
   ];
 
+  // useEffect for animations
   useEffect(() => {
     const section = sectionRef.current;
     

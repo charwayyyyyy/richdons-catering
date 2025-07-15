@@ -1,10 +1,14 @@
+// Import necessary libraries and components
 import React, { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+// Footer component
 const Footer = () => {
+  // Ref for footer element
   const footerRef = useRef();
 
+  // Data for quick links
   const quickLinks = [
     { name: 'Home', href: '#hero' },
     { name: 'About Us', href: '#about' },
@@ -14,6 +18,7 @@ const Footer = () => {
     { name: 'Contact', href: '#contact' }
   ];
 
+  // Data for services
   const services = [
     'Wedding Catering',
     'Corporate Events',
@@ -23,6 +28,7 @@ const Footer = () => {
     'Cooking Classes'
   ];
 
+  // Data for social links
   const socialLinks = [
     { name: 'Facebook', icon: './assets/icons/person.png', url: '#' },
     { name: 'Instagram', icon: './assets/icons/star.png', url: '#' },
@@ -30,6 +36,7 @@ const Footer = () => {
     { name: 'WhatsApp', icon: './assets/icons/phone.png', url: '#' }
   ];
 
+  // useEffect for animations
   useEffect(() => {
     const footer = footerRef.current;
     
@@ -65,6 +72,7 @@ const Footer = () => {
     );
   }, []);
 
+  // Function to scroll to a specific section
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId.replace('#', ''));
     if (element) {
@@ -76,6 +84,7 @@ const Footer = () => {
     }
   };
 
+  // Function to scroll to the top of the page
   const scrollToTop = () => {
     gsap.to(window, {
       duration: 2,
