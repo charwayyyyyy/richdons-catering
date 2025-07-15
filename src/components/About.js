@@ -1,20 +1,24 @@
+// Import necessary libraries and components
 import React, { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+// About component
 const About = () => {
+  // Refs for DOM elements
   const sectionRef = useRef();
   const imageRef = useRef();
   const contentRef = useRef();
   const statsRef = useRef();
 
+  // useEffect for animations
   useEffect(() => {
     const section = sectionRef.current;
     const image = imageRef.current;
     const content = contentRef.current;
     const stats = statsRef.current;
 
-    // Main animation timeline
+    // GSAP timeline for animations
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
@@ -24,6 +28,7 @@ const About = () => {
       }
     });
 
+    // Animate image, content, and stats
     tl.fromTo(image,
       { x: -100, opacity: 0, scale: 0.8 },
       { x: 0, opacity: 1, scale: 1, duration: 1.2, ease: 'power3.out' }
@@ -51,7 +56,7 @@ const About = () => {
       }
     });
 
-    // Counter animation
+    // Counter animation for stats
     const counters = stats.querySelectorAll('.counter');
     counters.forEach(counter => {
       const target = parseInt(counter.getAttribute('data-target'));
@@ -71,6 +76,7 @@ const About = () => {
     });
   }, []);
 
+  // Features data
   const features = [
     {
       icon: './assets/icons/star.png',
