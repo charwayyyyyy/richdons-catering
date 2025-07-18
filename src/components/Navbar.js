@@ -38,6 +38,7 @@ const Navbar = () => {
     { name: 'About Us', id: 'about' },
     { name: 'Ghanaian Menu', id: 'menu' },
     { name: 'Catering', id: 'services' },
+    { name: 'Budget', id: 'budget-calculator' },
     { name: 'Food Gallery', id: 'gallery' },
     { name: 'Contact', id: 'contact' }
   ];

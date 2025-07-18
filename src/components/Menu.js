@@ -1,9 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import FoodCard from './FoodCard';
+import FoodModal from './FoodModal';
+import { filterButtonsAnimation, activeFilterAnimation, menuTitleAnimation } from '../utils/menuAnimations';
 
 const Menu = () => {
   const [activeCategory, setActiveCategory] = useState('all');
+  const [selectedFood, setSelectedFood] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const sectionRef = useRef();
   const menuGridRef = useRef();
 
@@ -103,6 +108,8 @@ const Menu = () => {
 
   useEffect(() => {
     const section = sectionRef.current;
+    const menuHeader = document.querySelector('.menu-header h2');
+    const categoryButtons = document.querySelectorAll('.category-btn');
     
     // Animate section on scroll
     gsap.fromTo('.menu-header',
@@ -118,20 +125,14 @@ const Menu = () => {
       }
     );
 
-    // Animate category buttons
-    gsap.fromTo('.category-btn',
-      { y: 30, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.8,
-        stagger: 0.1,
-        scrollTrigger: {
-          trigger: '.categories-container',
-          start: 'top 80%'
-        }
-      }
-    );
+    // Enhanced animations using our new animation utilities
+    if (menuHeader) {
+      menuTitleAnimation(menuHeader);
+    }
+    
+    if (categoryButtons.length) {
+      filterButtonsAnimation(categoryButtons);
+    }
   }, []);
 
   useEffect(() => {
@@ -156,6 +157,8 @@ const Menu = () => {
     if (categoryId !== activeCategory) {
       // Animate out current items
       const menuItems = menuGridRef.current?.children;
+      const selectedButton = document.querySelector(`.category-btn[data-category="${categoryId}"]`);
+      
       if (menuItems) {
         gsap.to(menuItems, {
           scale: 0.8,
@@ -168,7 +171,27 @@ const Menu = () => {
       } else {
         setActiveCategory(categoryId);
       }
+      
+      // Apply enhanced animation to the active filter button
+      if (selectedButton) {
+        activeFilterAnimation(selectedButton);
+      }
     }
+  };
+  
+  // Handle opening the food modal
+  const handleFoodClick = (food) => {
+    setSelectedFood(food);
+    setIsModalOpen(true);
+    // Disable body scroll when modal is open
+    document.body.style.overflow = 'hidden';
+  };
+  
+  // Handle closing the food modal
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    // Re-enable body scroll when modal is closed
+    document.body.style.overflow = 'auto';
   };
 
   return (
@@ -194,6 +217,7 @@ const Menu = () => {
           {categories.map((category) => (
             <button
               key={category.id}
+              data-category={category.id}
               onClick={() => handleCategoryChange(category.id)}
               className={`category-btn flex items-center space-x-2 px-6 py-3 rounded-full font-semibold transition-all duration-300 shadow-md border-2 ${
                 activeCategory === category.id
@@ -207,64 +231,38 @@ const Menu = () => {
           ))}
         </div>
 
-        {/* Menu Grid */}
+        {/* Enhanced Menu Grid with FoodCard Component */}
         <div ref={menuGridRef} className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {filteredItems.map((item) => (
-            <div
-              key={item.id}
-              className="menu-item bg-white rounded-2xl shadow-lg overflow-hidden card-hover group cursor-pointer border-2 border-ghana-gold"
-            >
-              {/* Image Container */}
-              <div className="relative h-48 overflow-hidden">
-                <img 
-                  src={item.image} 
-                  alt={item.name}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                
-                {/* Badges */}
-                <div className="absolute top-3 left-3 flex flex-col gap-2">
-                  {item.popular && (
-                    <span className="bg-ghana-red text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
-                      Popular
-                    </span>
-                  )}
-                  {item.spicy && (
-                    <span className="bg-warm-orange text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
-                      🌶️ Spicy
-                    </span>
-                  )}
-                </div>
-
-                {/* Price Badge */}
-                <div className="absolute top-3 right-3 bg-ghana-gold text-earth-dark font-bold px-3 py-1 rounded-full shadow-md">
-                  ₵{item.price}
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="p-6 bg-gradient-to-b from-white to-ghana-green bg-opacity-5">
-                <h3 className="text-xl font-bold text-earth-dark mb-2 group-hover:text-ghana-red transition-colors duration-300 font-ghanaian">
-                  {item.name}
-                </h3>
-                <p className="text-earth-medium text-sm leading-relaxed mb-4">
-                  {item.description}
-                </p>
-                
-                {/* Action Buttons */}
-                <div className="flex gap-2">
-                  <button className="flex-1 bg-gradient-to-r from-ghana-red to-warm-orange text-white font-semibold py-2 px-4 rounded-lg hover:shadow-lg transition-all duration-300 hover:scale-105 shadow-md">
-                    Add to Cart
-                  </button>
-                  <button className="w-10 h-10 bg-ghana-gold/20 rounded-lg flex items-center justify-center hover:bg-ghana-gold/40 transition-colors duration-300 border-2 border-ghana-red shadow-md">
-                    <img src="./assets/icons/star.png" alt="Favorite" className="w-5 h-5" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
+          {filteredItems.map((item) => {
+            const enhancedFood = {
+              ...item,
+              ingredients: [
+                'Authentic Ghanaian spices',
+                'Fresh local ingredients',
+                ...(item.spicy ? ['Scotch bonnet peppers'] : []),
+                ...(item.category === 'mains' ? ['Premium protein'] : [])
+              ],
+              spiceLevel: item.spicy ? 3 : 1,
+              preparationTime: Math.floor(Math.random() * 15) + 15, // Random time between 15-30 mins
+              calories: Math.floor(Math.random() * 300) + 200, // Random calories between 200-500
+            };
+            
+            return (
+              <FoodCard 
+                key={item.id}
+                food={enhancedFood}
+                onClick={() => handleFoodClick(enhancedFood)}
+              />
+            );
+          })}
         </div>
+        
+        {/* Food Modal */}
+        <FoodModal 
+          food={selectedFood}
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+        />
 
         {/* Call to Action */}
         <div className="text-center mt-16">

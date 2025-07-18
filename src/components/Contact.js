@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import EnhancedContactForm from './EnhancedContactForm';
 
 const Contact = () => {
   const sectionRef = useRef();
@@ -184,118 +185,9 @@ const Contact = () => {
             </div>
           </div>
 
-          {/* Contact Form */}
-          <div ref={formRef} className="bg-white rounded-3xl shadow-2xl p-8">
-            <h3 className="text-3xl font-bold text-earth-dark mb-6">Request a Quote</h3>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-earth-dark font-semibold mb-2">Full Name *</label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-ghana-gold transition-all duration-300"
-                    placeholder="Your full name"
-                  />
-                </div>
-                <div>
-                  <label className="block text-earth-dark font-semibold mb-2">Email *</label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-ghana-gold transition-all duration-300"
-                    placeholder="your@email.com"
-                  />
-                </div>
-              </div>
-
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-earth-dark font-semibold mb-2">Phone Number</label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-ghana-gold transition-all duration-300"
-                    placeholder="+233 XX XXX XXXX"
-                  />
-                </div>
-                <div>
-                  <label className="block text-earth-dark font-semibold mb-2">Event Type</label>
-                  <select
-                    name="eventType"
-                    value={formData.eventType}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-ghana-gold transition-all duration-300"
-                  >
-                    <option value="">Select event type</option>
-                    <option value="wedding">Traditional Ghanaian Wedding</option>
-                    <option value="corporate">Corporate Event</option>
-                    <option value="birthday">Birthday Celebration</option>
-                    <option value="cultural">Cultural Festival</option>
-                    <option value="outdooring">Baby Outdooring Ceremony</option>
-                    <option value="funeral">Funeral Reception</option>
-                    <option value="other">Other Celebration</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-earth-dark font-semibold mb-2">Event Date</label>
-                  <input
-                    type="date"
-                    name="eventDate"
-                    value={formData.eventDate}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-ghana-gold transition-all duration-300"
-                  />
-                </div>
-                <div>
-                  <label className="block text-earth-dark font-semibold mb-2">Number of Guests</label>
-                  <input
-                    type="number"
-                    name="guests"
-                    value={formData.guests}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-ghana-gold transition-all duration-300"
-                    placeholder="50"
-                    min="1"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-earth-dark font-semibold mb-2">Message</label>
-                <textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  rows="4"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-ghana-gold transition-all duration-300 resize-none"
-                  placeholder="Tell us about your event and any special requirements..."
-                ></textarea>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full btn-primary text-lg py-4 group"
-              >
-                <span className="mr-2">Send Message</span>
-                <img 
-                  src="./assets/icons/arrow-right.png" 
-                  alt="Send" 
-                  className="inline-block w-5 h-5 group-hover:translate-x-1 transition-transform duration-300"
-                />
-              </button>
-            </form>
+          {/* Enhanced Contact Form */}
+          <div ref={formRef}>
+            <EnhancedContactForm />
           </div>
         </div>
 

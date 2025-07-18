@@ -2,7 +2,10 @@ import React, { useRef, useEffect, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Sphere, MeshDistortMaterial, Text3D, Center } from '@react-three/drei';
 import { gsap } from 'gsap';
+import anime from 'animejs';
 import * as THREE from 'three';
+import HeroSphere from './HeroSphere';
+import { enhancedHeroTitleAnimation, enhancedHeroSubtitleAnimation, enhancedCTAButtonsAnimation, enhancedFloatingFoodAnimation, textRevealAnimation } from '../utils/heroAnimations';
 
 // Animated 3D Food Sphere
 function AnimatedSphere() {
@@ -13,6 +16,8 @@ function AnimatedSphere() {
       meshRef.current.rotation.x = Math.sin(state.clock.elapsedTime) * 0.2;
       meshRef.current.rotation.y += 0.01;
       meshRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.2;
+      // Add distortion animation
+      meshRef.current.material.distort = 0.3 + Math.sin(state.clock.elapsedTime) * 0.1;
     }
   });
 
@@ -67,31 +72,48 @@ const Hero = () => {
   const ctaRef = useRef();
 
   useEffect(() => {
-    const tl = gsap.timeline({ delay: 0.5 });
+    // Split text into characters for animated reveal
+    if (titleRef.current) {
+      const titleText = titleRef.current.textContent;
+      titleRef.current.innerHTML = '';
+      
+      [...titleText].forEach(char => {
+        const charSpan = document.createElement('span');
+        charSpan.classList.add('char');
+        charSpan.textContent = char === ' ' ? '\u00A0' : char;
+        titleRef.current.appendChild(charSpan);
+      });
+      
+      // Apply enhanced title animation
+      enhancedHeroTitleAnimation(titleRef.current);
+    }
     
-    tl.fromTo(titleRef.current,
-      { opacity: 0, y: 100, scale: 0.8 },
-      { opacity: 1, y: 0, scale: 1, duration: 1.5, ease: 'power3.out' }
-    )
-    .fromTo(subtitleRef.current,
-      { opacity: 0, y: 50 },
-      { opacity: 1, y: 0, duration: 1, ease: 'power2.out' },
-      '-=0.8'
-    )
-    .fromTo(ctaRef.current,
-      { opacity: 0, y: 30, scale: 0.9 },
-      { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: 'back.out(1.7)' },
-      '-=0.5'
-    );
-
-    // Floating animation for hero content
-    gsap.to(heroRef.current, {
-      y: -20,
-      duration: 3,
-      repeat: -1,
-      yoyo: true,
-      ease: 'power2.inOut'
-    });
+    // Apply enhanced subtitle animation
+    if (subtitleRef.current) {
+      enhancedHeroSubtitleAnimation(subtitleRef.current);
+    }
+    
+    // Apply enhanced CTA buttons animation
+    if (ctaRef.current) {
+      enhancedCTAButtonsAnimation(ctaRef.current);
+    }
+    
+    // Apply enhanced floating animation to hero content
+    if (heroRef.current) {
+      anime({
+        targets: heroRef.current,
+        translateY: [-20, 0, -20],
+        duration: 6000,
+        easing: 'easeInOutSine',
+        loop: true
+      });
+    }
+    
+    // Apply enhanced floating food animation
+    const floatingFoodElements = document.querySelectorAll('.floating-food');
+    if (floatingFoodElements.length > 0) {
+      enhancedFloatingFoodAnimation(Array.from(floatingFoodElements));
+    }
   }, []);
 
   const scrollToMenu = () => {
@@ -116,11 +138,15 @@ const Hero = () => {
           <Suspense fallback={null}>
             <ambientLight intensity={0.5} />
             <pointLight position={[10, 10, 10]} intensity={1} />
-            <AnimatedSphere />
             <FloatingParticles />
             <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.5} />
           </Suspense>
         </Canvas>
+      </div>
+      
+      {/* Enhanced 3D Sphere */}
+      <div className="absolute -right-20 top-1/4 w-96 h-96 opacity-80 hidden lg:block">
+        <HeroSphere color="#FCD116" />
       </div>
 
       {/* Overlay Pattern */}
@@ -186,35 +212,35 @@ const Hero = () => {
       </div>
 
       {/* Floating Ghanaian Food Images */}
-      <div className="absolute top-20 left-10 animate-float animation-delay-200">
+      <div className="absolute top-20 left-10 floating-food">
         <img 
           src="./assets/images/jollof.jpeg" 
           alt="Jollof Rice" 
-          className="w-20 h-20 opacity-30 hover:opacity-60 transition-opacity duration-300 rounded-full"
+          className="w-20 h-20 opacity-30 hover:opacity-60 transition-opacity duration-300 rounded-full shadow-lg"
         />
       </div>
       
-      <div className="absolute top-40 right-20 animate-float animation-delay-400">
+      <div className="absolute top-40 right-20 floating-food">
         <img 
           src="./assets/images/banku.jpeg" 
           alt="Banku" 
-          className="w-24 h-24 opacity-30 hover:opacity-60 transition-opacity duration-300 rounded-full"
+          className="w-24 h-24 opacity-30 hover:opacity-60 transition-opacity duration-300 rounded-full shadow-lg"
         />
       </div>
       
-      <div className="absolute bottom-40 left-20 animate-float animation-delay-600">
+      <div className="absolute bottom-40 left-20 floating-food">
         <img 
           src="./assets/images/kelewele.jpeg" 
           alt="Kelewele" 
-          className="w-18 h-18 opacity-30 hover:opacity-60 transition-opacity duration-300 rounded-full"
+          className="w-18 h-18 opacity-30 hover:opacity-60 transition-opacity duration-300 rounded-full shadow-lg"
         />
       </div>
       
-      <div className="absolute bottom-60 right-40 animate-float animation-delay-300">
+      <div className="absolute bottom-60 right-40 floating-food">
         <img 
           src="./assets/images/waitors.jpg" 
           alt="Service" 
-          className="w-22 h-22 opacity-30 hover:opacity-60 transition-opacity duration-300 rounded-full"
+          className="w-22 h-22 opacity-30 hover:opacity-60 transition-opacity duration-300 rounded-full shadow-lg"
         />
       </div>
     </section>
