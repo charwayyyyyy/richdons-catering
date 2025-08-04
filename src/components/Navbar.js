@@ -1,11 +1,16 @@
+// Import necessary libraries and components
 import React, { useState, useEffect } from 'react';
 import { gsap } from 'gsap';
 
+// Navbar component
 const Navbar = () => {
+  // State for scroll and mobile menu
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // useEffect for handling scroll and initial animation
   useEffect(() => {
+    // Handle scroll event
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
@@ -18,9 +23,11 @@ const Navbar = () => {
       { y: 0, opacity: 1, duration: 1, ease: 'power3.out' }
     );
 
+    // Cleanup scroll event listener
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Function to scroll to a section
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -33,6 +40,7 @@ const Navbar = () => {
     setIsMobileMenuOpen(false);
   };
 
+  // Navigation items
   const navItems = [
     { name: 'Home', id: 'hero' },
     { name: 'About Us', id: 'about' },

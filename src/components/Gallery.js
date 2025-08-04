@@ -1,13 +1,18 @@
+// Import necessary libraries and components
 import React, { useState, useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+// Gallery component
 const Gallery = () => {
+  // State for selected image and active filter
   const [selectedImage, setSelectedImage] = useState(null);
   const [activeFilter, setActiveFilter] = useState('all');
+  // Refs for DOM elements
   const sectionRef = useRef();
   const galleryRef = useRef();
 
+  // Data for filters
   const filters = [
     { id: 'all', name: 'All Photos' },
     { id: 'events', name: 'Events' },
@@ -119,6 +124,7 @@ const Gallery = () => {
     ? galleryImages 
     : galleryImages.filter(img => img.category === activeFilter);
 
+  // useEffect for initial animations
   useEffect(() => {
     const section = sectionRef.current;
     
@@ -152,6 +158,7 @@ const Gallery = () => {
     );
   }, []);
 
+  // useEffect for animating gallery items when filter changes
   useEffect(() => {
     // Animate gallery items when filter changes
     const galleryItems = galleryRef.current?.children;
@@ -170,6 +177,7 @@ const Gallery = () => {
     }
   }, [activeFilter]);
 
+  // Handle filter change
   const handleFilterChange = (filterId) => {
     if (filterId !== activeFilter) {
       const galleryItems = galleryRef.current?.children;
@@ -188,11 +196,13 @@ const Gallery = () => {
     }
   };
 
+  // Open lightbox
   const openLightbox = (image) => {
     setSelectedImage(image);
     document.body.style.overflow = 'hidden';
   };
 
+  // Close lightbox
   const closeLightbox = () => {
     setSelectedImage(null);
     document.body.style.overflow = 'unset';

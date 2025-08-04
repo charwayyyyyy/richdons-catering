@@ -1,11 +1,15 @@
+// Import necessary libraries and components
 import React, { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import EnhancedContactForm from './EnhancedContactForm';
 
+// Contact component
 const Contact = () => {
+  // Refs for DOM elements
   const sectionRef = useRef();
   const formRef = useRef();
+  // State for form data
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -16,6 +20,7 @@ const Contact = () => {
     message: ''
   });
 
+  // Contact information data
   const contactInfo = [
     {
       icon: './assets/icons/phone.png',
@@ -43,6 +48,7 @@ const Contact = () => {
     }
   ];
 
+  // useEffect for animations
   useEffect(() => {
     const section = sectionRef.current;
     
@@ -92,6 +98,7 @@ const Contact = () => {
     );
   }, []);
 
+  // Handle form input change
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
@@ -99,6 +106,7 @@ const Contact = () => {
     });
   };
 
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     // Animate form submission
@@ -110,6 +118,7 @@ const Contact = () => {
       onComplete: () => {
         // Here you would typically send the form data to your backend
         alert('Thank you for your inquiry! We\'ll get back to you soon.');
+        // Reset form data
         setFormData({
           name: '',
           email: '',

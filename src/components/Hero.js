@@ -1,3 +1,4 @@
+// Import necessary libraries and components
 import React, { useRef, useEffect, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Sphere, MeshDistortMaterial, Text3D, Center } from '@react-three/drei';
@@ -7,10 +8,11 @@ import * as THREE from 'three';
 import HeroSphere from './HeroSphere';
 import { enhancedHeroTitleAnimation, enhancedHeroSubtitleAnimation, enhancedCTAButtonsAnimation, enhancedFloatingFoodAnimation, textRevealAnimation } from '../utils/heroAnimations';
 
-// Animated 3D Food Sphere
+// Component for the animated 3D sphere
 function AnimatedSphere() {
   const meshRef = useRef();
   
+  // useFrame hook for animation on each frame
   useFrame((state) => {
     if (meshRef.current) {
       meshRef.current.rotation.x = Math.sin(state.clock.elapsedTime) * 0.2;
@@ -22,6 +24,7 @@ function AnimatedSphere() {
   });
 
   return (
+    // 3D Sphere with distorted material
     <Sphere ref={meshRef} args={[1, 100, 200]} scale={2}>
       <MeshDistortMaterial
         color="#FCD116"
@@ -35,16 +38,18 @@ function AnimatedSphere() {
   );
 }
 
-// Floating Food Particles
+// Component for floating particles
 function FloatingParticles() {
   const groupRef = useRef();
   
+  // useFrame hook for animation on each frame
   useFrame((state) => {
     if (groupRef.current) {
       groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.1) * 0.1;
     }
   });
 
+  // Create an array of particles
   const particles = [];
   for (let i = 0; i < 50; i++) {
     particles.push(
@@ -65,57 +70,44 @@ function FloatingParticles() {
   return <group ref={groupRef}>{particles}</group>;
 }
 
+// Hero component
 const Hero = () => {
+  // Refs for DOM elements
   const heroRef = useRef();
   const titleRef = useRef();
   const subtitleRef = useRef();
   const ctaRef = useRef();
 
+  // useEffect for animations
   useEffect(() => {
-    // Split text into characters for animated reveal
-    if (titleRef.current) {
-      const titleText = titleRef.current.textContent;
-      titleRef.current.innerHTML = '';
-      
-      [...titleText].forEach(char => {
-        const charSpan = document.createElement('span');
-        charSpan.classList.add('char');
-        charSpan.textContent = char === ' ' ? '\u00A0' : char;
-        titleRef.current.appendChild(charSpan);
-      });
-      
-      // Apply enhanced title animation
-      enhancedHeroTitleAnimation(titleRef.current);
-    }
+    const tl = gsap.timeline({ delay: 0.5 });
     
-    // Apply enhanced subtitle animation
-    if (subtitleRef.current) {
-      enhancedHeroSubtitleAnimation(subtitleRef.current);
-    }
-    
-    // Apply enhanced CTA buttons animation
-    if (ctaRef.current) {
-      enhancedCTAButtonsAnimation(ctaRef.current);
-    }
-    
-    // Apply enhanced floating animation to hero content
-    if (heroRef.current) {
-      anime({
-        targets: heroRef.current,
-        translateY: [-20, 0, -20],
-        duration: 6000,
-        easing: 'easeInOutSine',
-        loop: true
-      });
-    }
-    
-    // Apply enhanced floating food animation
-    const floatingFoodElements = document.querySelectorAll('.floating-food');
-    if (floatingFoodElements.length > 0) {
-      enhancedFloatingFoodAnimation(Array.from(floatingFoodElements));
-    }
+    tl.fromTo(titleRef.current,
+      { opacity: 0, y: 100, scale: 0.8 },
+      { opacity: 1, y: 0, scale: 1, duration: 1.5, ease: 'power3.out' }
+    )
+    .fromTo(subtitleRef.current,
+      { opacity: 0, y: 50 },
+      { opacity: 1, y: 0, duration: 1, ease: 'power2.out' },
+      '-=0.8'
+    )
+    .fromTo(ctaRef.current,
+      { opacity: 0, y: 30, scale: 0.9 },
+      { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: 'back.out(1.7)' },
+      '-=0.5'
+    );
+
+    // Floating animation for hero content
+    gsap.to(heroRef.current, {
+      y: -20,
+      duration: 3,
+      repeat: -1,
+      yoyo: true,
+      ease: 'power2.inOut'
+    });
   }, []);
 
+  // Function to scroll to the menu section
   const scrollToMenu = () => {
     const menuSection = document.getElementById('menu');
     if (menuSection) {

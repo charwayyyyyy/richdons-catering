@@ -1,3 +1,4 @@
+// Import necessary libraries and components
 import React, { useState, useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -5,13 +6,15 @@ import FoodCard from './FoodCard';
 import FoodModal from './FoodModal';
 import { filterButtonsAnimation, activeFilterAnimation, menuTitleAnimation } from '../utils/menuAnimations';
 
+// Menu component
 const Menu = () => {
+  // State for active category
   const [activeCategory, setActiveCategory] = useState('all');
-  const [selectedFood, setSelectedFood] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // Refs for DOM elements
   const sectionRef = useRef();
   const menuGridRef = useRef();
 
+  // Data for categories
   const categories = [
     { id: 'all', name: 'All Items', icon: './assets/icons/star.png' },
     { id: 'mains', name: 'Main Dishes', icon: './assets/icons/home.png' },
@@ -106,12 +109,13 @@ const Menu = () => {
     ? menuItems 
     : menuItems.filter(item => item.category === activeCategory);
 
+  // useEffect for animations
   useEffect(() => {
     const section = sectionRef.current;
     const menuHeader = document.querySelector('.menu-header h2');
     const categoryButtons = document.querySelectorAll('.category-btn');
     
-    // Animate section on scroll
+    // Animate section header on scroll
     gsap.fromTo('.menu-header',
       { y: 50, opacity: 0 },
       {
@@ -125,18 +129,24 @@ const Menu = () => {
       }
     );
 
-    // Enhanced animations using our new animation utilities
-    if (menuHeader) {
-      menuTitleAnimation(menuHeader);
-    }
-    
-    if (categoryButtons.length) {
-      filterButtonsAnimation(categoryButtons);
-    }
+    // Animate category buttons on scroll
+    gsap.fromTo('.category-btn',
+      { y: 30, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: '.categories-container',
+          start: 'top 80%'
+        }
+      }
+    );
   }, []);
 
+  // useEffect to animate menu items when category changes
   useEffect(() => {
-    // Animate menu items when category changes
     const menuItems = menuGridRef.current?.children;
     if (menuItems) {
       gsap.fromTo(menuItems,
@@ -153,6 +163,7 @@ const Menu = () => {
     }
   }, [activeCategory]);
 
+  // Handle category change
   const handleCategoryChange = (categoryId) => {
     if (categoryId !== activeCategory) {
       // Animate out current items
