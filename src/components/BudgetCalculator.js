@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import { animate } from 'animejs';
+import { animate, stagger } from 'animejs';
 import { counterAnimation } from '../utils/animations';
 
 const BudgetCalculator = () => {
@@ -80,7 +80,7 @@ const BudgetCalculator = () => {
     // Animate the form transition
     const formElement = formRef.current;
     if (formElement) {
-      anime({
+      animate({
         targets: formElement,
         opacity: [1, 0],
         translateY: [0, -20],
@@ -94,7 +94,7 @@ const BudgetCalculator = () => {
           setTimeout(() => {
             const resultsElement = resultsRef.current;
             if (resultsElement) {
-              anime({
+              animate({
                 targets: resultsElement,
                 opacity: [0, 1],
                 translateY: [20, 0],
@@ -103,17 +103,17 @@ const BudgetCalculator = () => {
               });
               
               // Animate price breakdown items
-              anime({
+              animate({
                 targets: '.price-item',
                 opacity: [0, 1],
                 translateX: [-20, 0],
-                delay: anime.stagger(100),
+                delay: stagger(100),
                 duration: 500,
                 easing: 'easeOutQuad'
               });
               
               // Animate total price
-              anime({
+              animate({
                 targets: '.total-price',
                 opacity: [0, 1],
                 scale: [0.9, 1],
@@ -139,7 +139,7 @@ const BudgetCalculator = () => {
     if (additionalServices.includes(service)) {
       // Removing service animation
       if (serviceElement) {
-        anime({
+        animate({
           targets: serviceElement,
           scale: [1, 0.95, 1],
           backgroundColor: ['rgba(255,255,255,0.1)', 'rgba(214,40,40,0.1)', 'rgba(255,255,255,0.05)'],
@@ -152,7 +152,7 @@ const BudgetCalculator = () => {
     } else {
       // Adding service animation
       if (serviceElement) {
-        anime({
+        animate({
           targets: serviceElement,
           scale: [1, 1.05, 1],
           backgroundColor: ['rgba(255,255,255,0.05)', 'rgba(232,185,35,0.2)', 'rgba(255,255,255,0.1)'],

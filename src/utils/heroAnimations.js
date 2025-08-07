@@ -1,24 +1,24 @@
-import anime from 'animejs';
+import { animate, stagger } from 'animejs';
 import { gsap } from 'gsap';
 
 // Enhanced hero title animation
 export const enhancedHeroTitleAnimation = (titleElement) => {
   const chars = titleElement.querySelectorAll('.char');
   
-  return anime({
+  return animate({
     targets: chars,
     translateY: [100, 0],
     translateZ: 0,
     opacity: [0, 1],
     easing: 'easeOutExpo',
     duration: 1200,
-    delay: anime.stagger(30)
+    delay: stagger(30)
   });
 };
 
 // Enhanced hero subtitle animation
 export const enhancedHeroSubtitleAnimation = (subtitleElement) => {
-  return anime({
+  return animate({
     targets: subtitleElement,
     translateY: [20, 0],
     translateZ: 0,
@@ -33,14 +33,14 @@ export const enhancedHeroSubtitleAnimation = (subtitleElement) => {
 export const enhancedCTAButtonsAnimation = (buttonsContainer) => {
   const buttons = buttonsContainer.querySelectorAll('button, a');
   
-  return anime({
+  return animate({
     targets: buttons,
     translateY: [20, 0],
     translateZ: 0,
     opacity: [0, 1],
     easing: 'easeOutExpo',
     duration: 800,
-    delay: anime.stagger(150, {start: 800})
+    delay: stagger(150, {start: 800})
   });
 };
 
@@ -51,7 +51,7 @@ export const enhancedFloatingFoodAnimation = (foodElements) => {
     const direction = index % 2 === 0 ? 1 : -1;
     
     // Initial reveal animation
-    anime({
+    animate({
       targets: element,
       translateY: [50, 0],
       opacity: [0, 1],
@@ -62,7 +62,7 @@ export const enhancedFloatingFoodAnimation = (foodElements) => {
     
     // Continuous floating animation
     setTimeout(() => {
-      anime({
+      animate({
         targets: element,
         translateY: [`${direction * 15}px`, `${-direction * 15}px`],
         translateX: [`${-direction * 5}px`, `${direction * 5}px`],
@@ -79,7 +79,7 @@ export const enhancedFloatingFoodAnimation = (foodElements) => {
 // Enhanced sphere animation
 export const enhancedSphereAnimation = (sphereElement) => {
   // Initial reveal
-  anime({
+  animate({
     targets: sphereElement,
     scale: [0.8, 1],
     opacity: [0, 1],
@@ -89,7 +89,7 @@ export const enhancedSphereAnimation = (sphereElement) => {
   
   // Continuous subtle pulsing
   setTimeout(() => {
-    anime({
+    animate({
       targets: sphereElement,
       scale: [1, 1.05, 1],
       opacity: [1, 0.9, 1],

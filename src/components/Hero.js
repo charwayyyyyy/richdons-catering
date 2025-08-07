@@ -3,7 +3,7 @@ import React, { useRef, useEffect, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Sphere, MeshDistortMaterial, Text3D, Center } from '@react-three/drei';
 import { gsap } from 'gsap';
-import anime from 'animejs';
+import { animate } from 'animejs';
 import * as THREE from 'three';
 import HeroSphere from './HeroSphere';
 import { enhancedHeroTitleAnimation, enhancedHeroSubtitleAnimation, enhancedCTAButtonsAnimation, enhancedFloatingFoodAnimation, textRevealAnimation } from '../utils/heroAnimations';

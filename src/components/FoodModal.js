@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import anime from 'animejs';
+import { animate } from 'animejs';
 import { modalOpenAnimation, modalCloseAnimation, priceTagAnimation, ingredientTagsAnimation, spiceLevelAnimation } from '../utils/modalAnimations';
 
 const FoodModal = ({ food, isOpen, onClose }) => {

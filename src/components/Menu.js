@@ -10,6 +10,9 @@ import { filterButtonsAnimation, activeFilterAnimation, menuTitleAnimation } fro
 const Menu = () => {
   // State for active category
   const [activeCategory, setActiveCategory] = useState('all');
+  // State for selected food and modal
+  const [selectedFood, setSelectedFood] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   // Refs for DOM elements
   const sectionRef = useRef();
   const menuGridRef = useRef();

@@ -1,10 +1,10 @@
-import anime from 'animejs';
+import { animate, stagger } from 'animejs';
 import { gsap } from 'gsap';
 
 // Modal open animation
 export const modalOpenAnimation = (modalElement, contentElement) => {
   // Animate backdrop
-  anime({
+  animate({
     targets: modalElement,
     opacity: [0, 1],
     duration: 400,
@@ -12,7 +12,7 @@ export const modalOpenAnimation = (modalElement, contentElement) => {
   });
   
   // Animate content with more dynamic effect
-  return anime({
+  return animate({
     targets: contentElement,
     scale: [0.8, 1],
     opacity: [0, 1],
@@ -26,7 +26,7 @@ export const modalOpenAnimation = (modalElement, contentElement) => {
 // Modal close animation
 export const modalCloseAnimation = (modalElement, contentElement) => {
   // Animate backdrop
-  anime({
+  animate({
     targets: modalElement,
     opacity: 0,
     duration: 300,
@@ -34,7 +34,7 @@ export const modalCloseAnimation = (modalElement, contentElement) => {
   });
   
   // Animate content
-  return anime({
+  return animate({
     targets: contentElement,
     scale: 0.9,
     opacity: 0,
@@ -46,7 +46,7 @@ export const modalCloseAnimation = (modalElement, contentElement) => {
 
 // Food image hover animation in modal
 export const modalFoodImageHover = (imageElement) => {
-  return anime({
+  return animate({
     targets: imageElement,
     scale: 1.05,
     duration: 800,
@@ -56,7 +56,7 @@ export const modalFoodImageHover = (imageElement) => {
 
 // Price tag animation
 export const priceTagAnimation = (priceElement) => {
-  return anime({
+  return animate({
     targets: priceElement,
     scale: [1, 1.2, 1],
     rotate: [0, -5, 0],
@@ -67,11 +67,11 @@ export const priceTagAnimation = (priceElement) => {
 
 // Ingredients tag animation
 export const ingredientTagsAnimation = (ingredientElements) => {
-  return anime({
+  return animate({
     targets: ingredientElements,
     translateY: [10, 0],
     opacity: [0, 1],
-    delay: anime.stagger(50),
+    delay: stagger(50),
     duration: 500,
     easing: 'easeOutQuad'
   });
@@ -79,7 +79,7 @@ export const ingredientTagsAnimation = (ingredientElements) => {
 
 // Add to order button animation
 export const orderButtonAnimation = (buttonElement) => {
-  return anime({
+  return animate({
     targets: buttonElement,
     scale: [1, 1.05, 1],
     backgroundColor: {
