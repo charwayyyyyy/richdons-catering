@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { MeshDistortMaterial, Sphere, OrbitControls } from '@react-three/drei';
 import { enhancedSphereDistortion } from '../utils/animations';
@@ -7,9 +7,15 @@ import { enhancedSphereDistortion } from '../utils/animations';
 const AnimatedSphere = ({ color }) => {
   const meshRef = useRef();
   
-  // Apply the enhanced distortion animation on each frame
+  // Apply the enhanced distortion animation on each frame with error handling
   useFrame(() => {
-    enhancedSphereDistortion(meshRef);
+    try {
+      if (meshRef.current) {
+        enhancedSphereDistortion(meshRef);
+      }
+    } catch (error) {
+      console.error("Error in AnimatedSphere animation:", error);
+    }
   });
 
   return (
@@ -29,21 +35,35 @@ const AnimatedSphere = ({ color }) => {
 // The main component that renders the Canvas
 const HeroSphere = ({ color = "#FCD116" }) => {
   const containerRef = useRef();
+  const [hasError, setHasError] = useState(false);
   
   // Handle resize to maintain aspect ratio
   useEffect(() => {
     const handleResize = () => {
       if (containerRef.current) {
-        const { width, height } = containerRef.current.getBoundingClientRect();
+        const { width } = containerRef.current.getBoundingClientRect();
         containerRef.current.style.height = `${width * 0.8}px`;
       }
     };
     
-    handleResize();
-    window.addEventListener('resize', handleResize);
+    try {
+      handleResize();
+      window.addEventListener('resize', handleResize);
+    } catch (error) {
+      console.error("Error in resize handler:", error);
+      setHasError(true);
+    }
     
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  if (hasError) {
+    return (
+      <div className="w-full h-full rounded-full overflow-hidden bg-ghana-gold opacity-50">
+        {/* Fallback content */}
+      </div>
+    );
+  }
 
   return (
     <div 

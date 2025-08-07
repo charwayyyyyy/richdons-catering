@@ -139,7 +139,7 @@ const BudgetCalculator = () => {
     if (additionalServices.includes(service)) {
       // Removing service animation
       if (serviceElement) {
-        animate({
+        anime({
           targets: serviceElement,
           scale: [1, 0.95, 1],
           backgroundColor: ['rgba(255,255,255,0.1)', 'rgba(214,40,40,0.1)', 'rgba(255,255,255,0.05)'],
@@ -152,7 +152,7 @@ const BudgetCalculator = () => {
     } else {
       // Adding service animation
       if (serviceElement) {
-        animate({
+        anime({
           targets: serviceElement,
           scale: [1, 1.05, 1],
           backgroundColor: ['rgba(255,255,255,0.05)', 'rgba(232,185,35,0.2)', 'rgba(255,255,255,0.1)'],
@@ -211,7 +211,7 @@ const BudgetCalculator = () => {
   useEffect(() => {
     if (showResults && totalBudgetRef.current) {
       // Animate form out
-      animate({
+      anime({
         targets: formRef.current,
         opacity: [1, 0],
         translateY: [0, -20],
@@ -220,7 +220,7 @@ const BudgetCalculator = () => {
       });
       
       // Animate results in
-      animate({
+      anime({
         targets: resultsRef.current,
         opacity: [0, 1],
         translateY: [20, 0],

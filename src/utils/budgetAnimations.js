@@ -1,4 +1,4 @@
-import { animate } from 'animejs';
+import { animate, stagger } from 'animejs';
 import { gsap } from 'gsap';
 
 // Budget form field animation

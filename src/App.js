@@ -17,6 +17,7 @@ import Gallery from './components/Gallery';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import LoadingSpinner from './components/LoadingSpinner';
+import ErrorBoundary from './components/ErrorBoundary';
 
 // Register GSAP plugins for animations
 gsap.registerPlugin(ScrollTrigger, TextPlugin, ScrollToPlugin);
@@ -92,8 +93,15 @@ function App() {
                 <Navbar />
                 {/* Main content */}
                 <main>
-                  {/* Hero section */}
-                  <Hero />
+                  {/* Hero section with error boundary */}
+                  <ErrorBoundary fallback={<div className="min-h-screen bg-gradient-to-br from-ghana-green via-earth-dark to-ghana-red flex items-center justify-center">
+                    <div className="text-center text-white p-8">
+                      <h1 className="text-4xl font-bold mb-4">Welcome to RichDons</h1>
+                      <p className="text-xl">Experience authentic Ghanaian cuisine</p>
+                    </div>
+                  </div>}>
+                    <Hero />
+                  </ErrorBoundary>
                   {/* About section */}
                   <About />
                   {/* Menu section */}

@@ -1,10 +1,10 @@
-import { animate, Timeline } from 'animejs';
+import { animate, stagger, createTimeline } from 'animejs';
 import { gsap } from 'gsap';
 
 // Enhanced food card hover animation with Ghanaian-themed effects
 export const enhancedFoodCardHover = (element) => {
   // Create a timeline for sequenced animations
-  const timeline = new Timeline({
+  const timeline = createTimeline({
     targets: element,
     duration: 800,
     easing: 'easeOutElastic(1, .6)',
@@ -158,6 +158,6 @@ export const menuTitleAnimation = (titleElement) => {
     opacity: [0, 1],
     easing: 'easeOutExpo',
     duration: 1200,
-    delay: 50 // Simplified from stagger
+    delay: stagger(50) // Use stagger function
   });
 };

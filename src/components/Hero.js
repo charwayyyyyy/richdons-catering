@@ -1,25 +1,28 @@
 // Import necessary libraries and components
-import React, { useRef, useEffect, Suspense } from 'react';
+import React, { useRef, useEffect, Suspense, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Sphere, MeshDistortMaterial, Text3D, Center } from '@react-three/drei';
+import { OrbitControls, Sphere, MeshDistortMaterial } from '@react-three/drei';
 import { gsap } from 'gsap';
-import { animate } from 'animejs';
-import * as THREE from 'three';
+import { animate, stagger } from 'animejs';
 import HeroSphere from './HeroSphere';
-import { enhancedHeroTitleAnimation, enhancedHeroSubtitleAnimation, enhancedCTAButtonsAnimation, enhancedFloatingFoodAnimation, textRevealAnimation } from '../utils/heroAnimations';
+import ErrorBoundary from './ErrorBoundary';
 
-// Component for the animated 3D sphere
+// Component for the animated 3D sphere with error handling
 function AnimatedSphere() {
   const meshRef = useRef();
   
   // useFrame hook for animation on each frame
   useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.x = Math.sin(state.clock.elapsedTime) * 0.2;
-      meshRef.current.rotation.y += 0.01;
-      meshRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.2;
-      // Add distortion animation
-      meshRef.current.material.distort = 0.3 + Math.sin(state.clock.elapsedTime) * 0.1;
+    try {
+      if (meshRef.current) {
+        meshRef.current.rotation.x = Math.sin(state.clock.elapsedTime) * 0.2;
+        meshRef.current.rotation.y += 0.01;
+        meshRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.2;
+        // Add distortion animation
+        meshRef.current.material.distort = 0.3 + Math.sin(state.clock.elapsedTime) * 0.1;
+      }
+    } catch (error) {
+      console.error("Error in AnimatedSphere animation:", error);
     }
   });
 
@@ -38,36 +41,56 @@ function AnimatedSphere() {
   );
 }
 
-// Component for floating particles
+// Component for floating particles with error handling
 function FloatingParticles() {
   const groupRef = useRef();
+  const [particles, setParticles] = useState([]);
+  
+  // Create particles once on mount
+  useEffect(() => {
+    try {
+      const newParticles = [];
+      for (let i = 0; i < 50; i++) {
+        newParticles.push({
+          key: i,
+          position: [
+            (Math.random() - 0.5) * 10,
+            (Math.random() - 0.5) * 10,
+            (Math.random() - 0.5) * 10
+          ],
+          color: Math.random() > 0.5 ? "#CE1126" : "#FCD116"
+        });
+      }
+      setParticles(newParticles);
+    } catch (error) {
+      console.error("Error creating particles:", error);
+    }
+  }, []);
   
   // useFrame hook for animation on each frame
   useFrame((state) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.1) * 0.1;
+    try {
+      if (groupRef.current) {
+        groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.1) * 0.1;
+      }
+    } catch (error) {
+      console.error("Error in FloatingParticles animation:", error);
     }
   });
 
-  // Create an array of particles
-  const particles = [];
-  for (let i = 0; i < 50; i++) {
-    particles.push(
-      <mesh
-        key={i}
-        position={[
-          (Math.random() - 0.5) * 10,
-          (Math.random() - 0.5) * 10,
-          (Math.random() - 0.5) * 10
-        ]}
-      >
-        <sphereGeometry args={[0.02, 8, 8]} />
-        <meshBasicMaterial color={Math.random() > 0.5 ? "#CE1126" : "#FCD116"} />
-      </mesh>
-    );
-  }
-
-  return <group ref={groupRef}>{particles}</group>;
+  return (
+    <group ref={groupRef}>
+      {particles.map(particle => (
+        <mesh
+          key={particle.key}
+          position={particle.position}
+        >
+          <sphereGeometry args={[0.02, 8, 8]} />
+          <meshBasicMaterial color={particle.color} />
+        </mesh>
+      ))}
+    </group>
+  );
 }
 
 // Hero component
@@ -80,42 +103,55 @@ const Hero = () => {
 
   // useEffect for animations
   useEffect(() => {
-    const tl = gsap.timeline({ delay: 0.5 });
-    
-    tl.fromTo(titleRef.current,
-      { opacity: 0, y: 100, scale: 0.8 },
-      { opacity: 1, y: 0, scale: 1, duration: 1.5, ease: 'power3.out' }
-    )
-    .fromTo(subtitleRef.current,
-      { opacity: 0, y: 50 },
-      { opacity: 1, y: 0, duration: 1, ease: 'power2.out' },
-      '-=0.8'
-    )
-    .fromTo(ctaRef.current,
-      { opacity: 0, y: 30, scale: 0.9 },
-      { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: 'back.out(1.7)' },
-      '-=0.5'
-    );
+    try {
+      const tl = gsap.timeline({ delay: 0.5 });
+      
+      tl.fromTo(titleRef.current,
+        { opacity: 0, y: 100, scale: 0.8 },
+        { opacity: 1, y: 0, scale: 1, duration: 1.5, ease: 'power3.out' }
+      )
+      .fromTo(subtitleRef.current,
+        { opacity: 0, y: 50 },
+        { opacity: 1, y: 0, duration: 1, ease: 'power2.out' },
+        '-=0.8'
+      )
+      .fromTo(ctaRef.current,
+        { opacity: 0, y: 30, scale: 0.9 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: 'back.out(1.7)' },
+        '-=0.5'
+      );
 
-    // Floating animation for hero content
-    gsap.to(heroRef.current, {
-      y: -20,
-      duration: 3,
-      repeat: -1,
-      yoyo: true,
-      ease: 'power2.inOut'
-    });
+      // Floating animation for hero content
+      gsap.to(heroRef.current, {
+        y: -20,
+        duration: 3,
+        repeat: -1,
+        yoyo: true,
+        ease: 'power2.inOut'
+      });
+    } catch (error) {
+      console.error("Error in Hero animations:", error);
+    }
   }, []);
 
   // Function to scroll to the menu section
   const scrollToMenu = () => {
-    const menuSection = document.getElementById('menu');
-    if (menuSection) {
-      gsap.to(window, {
-        duration: 1.5,
-        scrollTo: { y: menuSection.offsetTop - 80 },
-        ease: 'power3.inOut'
-      });
+    try {
+      const menuSection = document.getElementById('menu');
+      if (menuSection) {
+        gsap.to(window, {
+          duration: 1.5,
+          scrollTo: { y: menuSection.offsetTop - 80 },
+          ease: 'power3.inOut'
+        });
+      }
+    } catch (error) {
+      console.error("Error in scrollToMenu:", error);
+      // Fallback to standard scrolling
+      const menuSection = document.getElementById('menu');
+      if (menuSection) {
+        menuSection.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
@@ -124,21 +160,25 @@ const Hero = () => {
       {/* Background Gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-ghana-green via-earth-dark to-ghana-red"></div>
       
-      {/* 3D Background */}
+      {/* 3D Background with Error Boundary */}
       <div className="absolute inset-0 opacity-30">
-        <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
-          <Suspense fallback={null}>
-            <ambientLight intensity={0.5} />
-            <pointLight position={[10, 10, 10]} intensity={1} />
-            <FloatingParticles />
-            <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.5} />
-          </Suspense>
-        </Canvas>
+        <ErrorBoundary fallback={null}>
+          <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
+            <Suspense fallback={null}>
+              <ambientLight intensity={0.5} />
+              <pointLight position={[10, 10, 10]} intensity={1} />
+              <FloatingParticles />
+              <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.5} />
+            </Suspense>
+          </Canvas>
+        </ErrorBoundary>
       </div>
       
-      {/* Enhanced 3D Sphere */}
+      {/* Enhanced 3D Sphere with Error Boundary */}
       <div className="absolute -right-20 top-1/4 w-96 h-96 opacity-80 hidden lg:block">
-        <HeroSphere color="#FCD116" />
+        <ErrorBoundary fallback={null}>
+          <HeroSphere color="#FCD116" />
+        </ErrorBoundary>
       </div>
 
       {/* Overlay Pattern */}

@@ -1,4 +1,5 @@
-import { animate } from 'animejs';
+import { animate, stagger } from 'animejs';
+
 import { gsap } from 'gsap';
 
 // Food item hover animation
@@ -50,7 +51,7 @@ export const staggeredList = (elements, delay = 50) => {
     translateY: [20, 0],
     easing: 'easeOutExpo',
     duration: 800,
-    delay: delay // Removed stagger as it's not available in the same way
+    delay: stagger(delay) // Use stagger function
   });
 };
 
@@ -68,7 +69,7 @@ export const textReveal = (element) => {
 
 // Ghanaian flag color wave animation
 export const ghanaFlagWave = (elements) => {
-  return animate({
+  return anime({
     targets: elements,
     backgroundColor: [
       { value: '#CE1126' }, // Ghana Red
@@ -99,7 +100,7 @@ export const floatingFoodImages = (elements) => {
     opacity: [0.3, 0.8],
     easing: 'easeInOutQuad',
     duration: 4000,
-    delay: 200, // Removed stagger as it's not available in the same way
+    delay: stagger(200), // Use stagger function
     direction: 'alternate',
     loop: true
   });
